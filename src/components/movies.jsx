@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
+import Like from "./like";
 
 class Movies extends Component {
   state = {
@@ -9,6 +10,15 @@ class Movies extends Component {
   handleDelete = (movie) => {
     const movies = this.state.movies.filter((m) => m._id !== movie._id);
     this.setState({ movies });
+  };
+
+  handleLike = (movie) => {
+    //console.log("its clicked", movie);
+    const movies = [...this.state.movies]; //Copy from the current movies array
+    const index = movies.indexOf(movie); //Just copy the index of that movies array alone/
+    movies[index] = { ...movies[index] }; //Now create a new array with that index.
+    movies[index].liked = !movies[index].liked; //Update the index where the button is liked.
+    this.setState({ movies }); //Set the state as this new array.
   };
 
   render() {
@@ -26,7 +36,8 @@ class Movies extends Component {
               <th>Genre</th>
               <th>Stock</th>
               <th>Rate</th>
-              <th></th>
+              <th>Favourites</th>
+              <th>Remove Movie</th>
             </tr>
           </thead>
           <tbody>
@@ -36,6 +47,12 @@ class Movies extends Component {
                 <td>{movie.genre.name}</td>
                 <td>{movie.numberInStock}</td>
                 <td>{movie.dailyRentalRate}</td>
+                <td>
+                  <Like
+                    liked={movie.liked}
+                    onClick={() => this.handleLike(movie)}
+                  />
+                </td>
                 <td>
                   <button
                     onClick={() => this.handleDelete(movie)}

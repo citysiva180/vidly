@@ -1,16 +1,27 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
+import pagination from "./pagination";
 import Like from "./like";
+import Pagination from "./pagination";
 
 class Movies extends Component {
   state = {
     movies: getMovies(),
+    pageSize: 4,
   };
+
+  //  +------------------------------------+
+  //    Here is the logic for Delete button
+  //  +------------------------------------+
 
   handleDelete = (movie) => {
     const movies = this.state.movies.filter((m) => m._id !== movie._id);
     this.setState({ movies });
   };
+
+  //  +----------------------------------+
+  //    Here is the logic for like button
+  //  +----------------------------------+
 
   handleLike = (movie) => {
     //console.log("its clicked", movie);
@@ -19,6 +30,10 @@ class Movies extends Component {
     movies[index] = { ...movies[index] }; //Now create a new array with that index.
     movies[index].liked = !movies[index].liked; //Update the index where the button is liked.
     this.setState({ movies }); //Set the state as this new array.
+  };
+
+  handlePageChange = (page) => {
+    console.log("page");
   };
 
   render() {
@@ -64,6 +79,11 @@ class Movies extends Component {
               </tr>
             ))}
           </tbody>
+          <Pagination
+            itemsCount={count}
+            pageSize={this.state.pageSize}
+            onPageChange={this.handlePageChange}
+          />
         </table>
       </React.Fragment>
     );

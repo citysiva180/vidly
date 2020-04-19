@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
-import pagination from "./pagination";
+
 import Like from "./like";
 import Pagination from "./pagination";
 

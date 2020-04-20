@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import _ from "lodash";
 
 const Pagination = (props) => {
@@ -25,6 +26,15 @@ const Pagination = (props) => {
       </ul>
     </nav>
   );
+};
+
+//PropTypes would help you in providing checklist to all the learning that you have done.
+
+Pagination.protoType = {
+  itemsCount: PropTypes.number.isRequired,
+  pageSize: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
 };
 
 export default Pagination;
